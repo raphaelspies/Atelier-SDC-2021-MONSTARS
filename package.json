@@ -1,0 +1,29 @@
+{
+  "name": "atelier-sdc-2021-monstars",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mongoDBschema.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/THE-MONSTARS/Atelier-SDC-2021-MONSTARS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/THE-MONSTARS/Atelier-SDC-2021-MONSTARS/issues"
+  },
+  "homepage": "https://github.com/THE-MONSTARS/Atelier-SDC-2021-MONSTARS#readme",
+  "dependencies": {
+    "fastify": "^3.18.0",
+    "knex": "^0.95.6",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.14",
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0",
+    "postgres": "^1.0.2"
+  }
+}
