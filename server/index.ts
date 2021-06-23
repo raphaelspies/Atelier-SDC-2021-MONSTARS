@@ -2,7 +2,9 @@ const fastify = require('fastify')({
   logger: true,
 });
 
-fastify.get('/', async (req: Request, res: Response) => 'hello world');
+// CLI prettytext
+// module.exports = async function(fastify, opts) {
+// }
 
 fastify
   .register(require('./products'), { prefix: '/products' });
