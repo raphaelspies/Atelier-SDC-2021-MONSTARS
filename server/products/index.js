@@ -1,6 +1,14 @@
 const fastify = require('fastify');
-const schema = require('./schema.js');
-const productsHandler = require('./service.js');
+
+const {
+  allProductsSchema,
+  postProductSchema,
+} = require('./schema');
+
+const {
+  getProductsHandler,
+  postProductHandler,
+} = require('./service');
 
 // fastify.addHook('Validation', (async (req, res) => {
 //   await schema.productSchema

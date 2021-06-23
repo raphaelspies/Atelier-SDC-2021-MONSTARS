@@ -1,6 +1,9 @@
-const fastify = require('fastify')({
-    logger: true,
-});
+const fastify = require('fastify');
+const products = require('./products');
+// ({
+//   logger: true,
+// });
+// const products = require('./products/index.js')
 // CLI prettytext
 // module.exports = async function(fastify, opts) {
 // }
