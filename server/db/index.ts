@@ -1,3 +1,4 @@
+export {};
 const connection = 'localhost:3000';
 
 const db = require('knex')({
