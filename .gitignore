@@ -1,5 +1,14 @@
 node_modules
+<<<<<<< HEAD
 dist
 schema2.sql
 CSV
 databases
+=======
+<<<<<<< HEAD
+dist
+knexfile.js
+=======
+dist
+>>>>>>> ba938c2d92bd6556da14553b862b660f20cec495
+>>>>>>> 2332ff154899304aaa4de0d67d28c660b8689d8d
