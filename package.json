@@ -4,8 +4,9 @@
   "description": "",
   "main": "mongoDBschema.js",
   "scripts": {
-    "start": "node_modules/.bin/tsc-watch --onSuccess \"node dist/index.js\"",
+    "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "database": "psql -U postgres -f schema.sql",
     "lint": "eslint --ignore-path .gitignore"
   },
   "repository": {
@@ -23,6 +24,7 @@
     "@types/node": "^15.12.4",
     "fastify": "^3.18.0",
     "fastify-cli": "^2.13.0",
+    "fastify-plugin": "^3.0.0",
     "knex": "^0.95.6",
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.14",

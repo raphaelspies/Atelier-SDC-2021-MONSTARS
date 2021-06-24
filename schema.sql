@@ -20,8 +20,7 @@ CREATE TABLE products (
   default_price INTEGER NULL DEFAULT NULL,
   created_at DATE NULL DEFAULT NULL,
   updated_at DATE NULL DEFAULT NULL,
-  PRIMARY KEY (id),
-  FULLTEXT KEY ()
+  PRIMARY KEY (id)
 );
 
 -- ---

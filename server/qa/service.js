@@ -15,8 +15,15 @@ module.exports = class QuestionsAndAnswers {
     this.db = db;
   }
 
-  getAllQuestionsAndAnswers(id) {
+  getAllQuestionsAndAnswers() {
     return this.db.select().from('questions').innerJoin('answers')
       .where('answers.id_questions', 'questions.id');
+  }
+
+  getTestFeatures() {
+    const allTestFeatures = this.db.select().from('features');
+    return allTestFeatures
+      .then((result) => result)
+      .catch((err) => { console.log(err); });
   }
 };

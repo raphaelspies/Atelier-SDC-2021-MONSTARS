@@ -1,12 +1,10 @@
-import { Knex } from 'knex';
-
 const fastify = require('fastify')({
   logger: true,
 });
-const db: Knex = require('./db');
+const fp = require('fastify-plugin');
+const db = require('./db');
 
-const QuestionsAndAnswers = require('./qa');
-const ReviewsClass = require('./reviews');
+const QuestionsAndAnswers = require('./qa/service');
 
 // CLI prettytext
 // module.exports = async function(fastify, opts) {
@@ -17,15 +15,18 @@ async function decorateFastifyInstance() {
   fastify.decorate('qna', questionsAndAnswers);
 }
 
+fastify.get('/', (req, reply) => {
+  reply.send('hello!');
+})
+
 fastify
-  .register(decorateFastifyInstance)
+  .register(fp(decorateFastifyInstance))
   .register(require('./products'), { prefix: '/products' })
-  .register(require('./qa'));
-  // .register(require('./reviews'));
+  .register(require('./qa'), { prefix: '/qa' });
 
 fastify.listen(3000)
-  .then((address: string) => console.log('listening on ', address))
-  .catch((err: Error) => {
+  .then((address) => console.log('listening on ', address))
+  .catch((err) => {
     console.log('error starting server', err);
     process.exit(1);
   });
