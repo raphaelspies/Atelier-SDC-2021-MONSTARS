@@ -16,7 +16,7 @@ const {
 
 module.exports = function (fastify, opts) {
   fastify.get('/', { schema: allProductsSchema }, getProductsHandler);
-  fastify.post('/', { schema: postProductSchema }, postProductHandler);
+  fastify.post('/', { schema: addProductSchema }, addProductHandler);
 };
 
 // handlers
