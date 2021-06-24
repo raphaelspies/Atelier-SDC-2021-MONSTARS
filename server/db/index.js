@@ -1,4 +1,4 @@
-const connection = 'localhost:3000';
+const connection = 'localhost';
 
 const db = require('knex')({
   client: 'pg',
