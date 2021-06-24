@@ -1,4 +1,4 @@
-// const db = require('../db/index.ts');
+import { Knex } from "knex";
 
 // interface Question {
 //   id: number,
@@ -16,12 +16,13 @@ module.exports = class QuestionsAndAnswers {
   }
 
   getAllQuestionsAndAnswers() {
-    return this.db.select().from('questions').innerJoin('answers')
+    return this.db('questions')
+      .innerJoin('answers')
       .where('answers.id_questions', 'questions.id');
   }
 
   getTestFeatures() {
-    const allTestFeatures = this.db.select().from('features');
+    const allTestFeatures = this.db.select().from('answers');
     return allTestFeatures
       .then((result) => result)
       .catch((err) => { console.log(err); });

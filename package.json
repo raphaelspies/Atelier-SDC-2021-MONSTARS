@@ -4,9 +4,9 @@
   "description": "",
   "main": "mongoDBschema.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node_modules/.bin/tsc-watch --onSuccess \"node dist/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "database": "psql -U postgres -f schema.sql",
+    "database": "psql -U postgres -d atelier -f schema.sql",
     "lint": "eslint --ignore-path .gitignore"
   },
   "repository": {
