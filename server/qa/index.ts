@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyReply } from "fastify";
 
 const {
   getAllQuestionsAndReviewsSchema,
