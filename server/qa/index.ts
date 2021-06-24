@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyReply } from "fastify";
 
 const {
   getAllQuestionsAndReviewsSchema,
@@ -15,19 +15,7 @@ async function getAllQuestionsAndReviewsHandler(req: any, reply: FastifyReply) {
   }
 }
 
-async function getFeatureTestHandler(req: any, reply: FastifyReply) {
-  try {
-    const allFeatures: object = await this.qna.getTestFeatures();
-    console.log('what is this?:', allFeatures);
-    reply.code(200).send(allFeatures);
-  } catch (err) {
-    console.log('error getting test features');
-    reply.code(404).send(err);
-  }
-}
-
 module.exports = function (fastify: FastifyInstance, opts, done: Function): void {
   fastify.get('/:id', { schema: getAllQuestionsAndReviewsSchema }, getAllQuestionsAndReviewsHandler);
-  fastify.get('/featuretest', getFeatureTestHandler);
   done();
 };

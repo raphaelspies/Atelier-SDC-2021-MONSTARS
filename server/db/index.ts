@@ -1,6 +1,6 @@
-import { Knex } from "knex";
+import { Knex } from 'knex';
 
-const connection = 'localhost:3000';
+const connection = 'localhost';
 
 const db: Knex = require('knex')({
   client: 'pg',

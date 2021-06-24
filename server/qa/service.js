@@ -15,16 +15,10 @@ module.exports = class QuestionsAndAnswers {
     this.db = db;
   }
 
-  getAllQuestionsAndAnswers() {
-    return this.db('questions')
-      .innerJoin('answers')
-      .where('answers.id_questions', 'questions.id');
-  }
-
-  getTestFeatures() {
-    const allTestFeatures = this.db.select().from('answers');
-    return allTestFeatures
-      .then((result) => result)
-      .catch((err) => { console.log(err); });
+  async getAllQuestionsAndAnswers() {
+    const allQuestionsAndAnswers = await this.db('questions')
+      .innerJoin('answers', 'answers.id_questions', 'questions.id');
+    console.log(allQuestionsAndAnswers);
+    return allQuestionsAndAnswers;
   }
 };
