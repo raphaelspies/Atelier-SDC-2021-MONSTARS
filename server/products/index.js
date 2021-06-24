@@ -1,5 +1,7 @@
 const fastify = require('fastify');
 
+const app = fastify();
+
 const {
   allProductsSchema,
   postProductSchema,
@@ -14,9 +16,13 @@ const {
 //   await schema.productSchema
 // }))
 
-module.exports = function (fastify, opts) {
+module.exports = function () {
   fastify.get('/', { schema: allProductsSchema }, getProductsHandler);
   fastify.post('/', { schema: postProductSchema }, postProductHandler);
 };
 
 // handlers
+
+async function getProductsHandler() {
+
+}
