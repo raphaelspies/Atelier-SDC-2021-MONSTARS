@@ -1,7 +1,9 @@
+--Database
 DROP DATABASE IF EXISTS atelier;
 
 CREATE DATABASE atelier;
 
+-- Products
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
@@ -15,5 +17,22 @@ CREATE TABLE products (
 );
 
 COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+DELIMITER ','
+CSV HEADER;
+
+-- Styles
+DROP TABLE IF EXISTS styles;
+
+CREATE TABLE styles (
+  id SERIAL,
+  productId VARCHAR NULL DEFAULT NULL,
+  name VARCHAR NULL DEFAULT NULL,
+  sale_price VARCHAR NULL DEFAULT NULL,
+  original_price INTEGER NULL DEFAULT NULL,
+  default_style INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+COPY styles FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/styles.csv'
 DELIMITER ','
 CSV HEADER;

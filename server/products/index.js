@@ -21,7 +21,7 @@ async function getAllProductsHandler(req, reply) {
     reply.code(200).send(products);
   } catch (err) {
     reply.code(400).send(err);
-    console.log(`error trying to get all products: `, err);
+    console.log('error trying to get all products: ', err);
   }
 }
 
@@ -31,7 +31,18 @@ async function addProductsHandler(req, reply) {
     reply.code(200).send(productAdded);
   } catch (err) {
     reply.code(400).send(err);
-    console.log(`error trying to add product: `, err);
+    console.log('error trying to add product: ', err);
+  }
+}
+
+async function getProductStylesHandler(req, reply) {
+  try {
+    const { id } = req.params;
+    const styles = await this.products.getStyles(id);
+    reply.code(200).send(styles);
+  } catch (err) {
+    reply.code(400).send(err);
+    console.log('error trying to get styles: ', err);
   }
 }
 
@@ -39,6 +50,7 @@ async function addProductsHandler(req, reply) {
 module.exports = function (fastify, opts, done) {
   fastify.get('/:id', getOneProductHandler);
   fastify.get('/', getAllProductsHandler);
+  fastify.get('/:id/styles', getProductStylesHandler);
   fastify.post('/', { schema: addProductSchema }, addProductsHandler);
   done();
 };
