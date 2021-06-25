@@ -1,7 +1,3 @@
 node_modules
-<<<<<<< HEAD
 dist
-knexfile.js
-=======
-dist
->>>>>>> ba938c2d92bd6556da14553b862b660f20cec495
+data

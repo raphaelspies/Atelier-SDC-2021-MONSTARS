@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyReply } from "fastify";
 
 const {
-  getAllQuestionsAndReviewsSchema,
+  getAllQuestionsAndAnswersSchema,
 } = require('./schema');
 
-async function getAllQuestionsAndReviewsHandler(req: any, reply: FastifyReply) {
+async function getAllQuestionsAndAnswersHandler(req: any, reply: FastifyReply) {
   try {
     const { id } = req.params;
     const allQuestionsAndAnswers = await this.qna.getAllQuestionsAndAnswers(id);
@@ -15,7 +15,19 @@ async function getAllQuestionsAndReviewsHandler(req: any, reply: FastifyReply) {
   }
 }
 
+async function getOneQuestionHandler(req: any, reply: FastifyReply) {
+  try {
+    const { id } = req.params;
+    const oneQuestion = await this.qna.getOneQuestion(id);
+    reply.code(200).send(oneQuestion);
+  } catch (err) {
+    console.log('error trying to get one question: ', err);
+    throw err;
+  }
+}
+
 module.exports = function (fastify: FastifyInstance, opts, done: Function): void {
-  fastify.get('/:id', { schema: getAllQuestionsAndReviewsSchema }, getAllQuestionsAndReviewsHandler);
+  fastify.get('/:id', { schema: getAllQuestionsAndAnswersSchema }, getAllQuestionsAndAnswersHandler);
+  fastify.get('/:id/single', getOneQuestionHandler);
   done();
 };
