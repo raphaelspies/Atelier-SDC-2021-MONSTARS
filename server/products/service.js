@@ -10,7 +10,12 @@ module.exports = class Products {
     // return "hello from getOneProduct!";
   }
 
-  // addProduct: (productInfo) => {
-  //   reply.send(console.log('hello from getProductsHandler'));
-  // },
+  async getAllProducts() {
+    const products = await this.db.select().from('products').whereBetween('id', [1, 50]);
+    return products;
+  }
 };
+
+//   async addProduct(productInfo) {
+//   const productAdded = await this.db.insert()
+// },
