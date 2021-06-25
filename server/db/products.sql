@@ -1,0 +1,19 @@
+DROP DATABASE IF EXISTS atelier;
+
+CREATE DATABASE atelier;
+
+DROP TABLE IF EXISTS products;
+
+CREATE TABLE products (
+  id SERIAL,
+  name VARCHAR NULL DEFAULT NULL,
+  slogan VARCHAR NULL DEFAULT NULL,
+  description VARCHAR NULL DEFAULT NULL,
+  category VARCHAR NULL DEFAULT NULL,
+  default_price INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+DELIMITER ','
+CSV HEADER;

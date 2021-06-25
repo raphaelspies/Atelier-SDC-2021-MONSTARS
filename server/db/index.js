@@ -5,7 +5,7 @@ const db = require('knex')({
   connection: {
     host: connection,
     user: 'postgres',
-    password: '',
+    password: 'password',
     database: 'atelier',
   },
 });

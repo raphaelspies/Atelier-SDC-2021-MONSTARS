@@ -15,15 +15,15 @@ CREATE TABLE products (
   id SERIAL,
   name VARCHAR NULL DEFAULT NULL,
   slogan VARCHAR NULL DEFAULT NULL,
-  description INTEGER NULL DEFAULT NULL,
-  category INTEGER NULL DEFAULT NULL,
+  description VARCHAR NULL DEFAULT NULL,
+  category VARCHAR NULL DEFAULT NULL,
   default_price INTEGER NULL DEFAULT NULL,
-  created_at DATE NULL DEFAULT NULL,
-  updated_at DATE NULL DEFAULT NULL,
-  PRIMARY KEY (id),
-  FULLTEXT KEY ()
+  PRIMARY KEY (id)
 );
 
+COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+DELIMITER ','
+CSV HEADER;
 -- ---
 -- Table 'Reviews'
 --
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS answers;
 CREATE TABLE answers (
   id SERIAL,
   body TEXT NULL DEFAULT NULL,
-  date DATE NULL DEFAULT NULL,
+  date TEXT NULL DEFAULT NULL,
   answerer_name VARCHAR NULL DEFAULT NULL,
   helpfulness INTEGER NULL DEFAULT NULL,
   photos TEXT NULL DEFAULT NULL,
