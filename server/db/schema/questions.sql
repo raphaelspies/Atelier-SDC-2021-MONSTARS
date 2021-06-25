@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS questions;
 
 CREATE TABLE questions (
-  id INTEGER,
+  question_id INTEGER,
   id_products INTEGER NULL DEFAULT NULL,
   question_body TEXT NULL DEFAULT NULL,
   question_date BIGINT NULL DEFAULT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE questions (
   asker_email VARCHAR NULL DEFAULT NULL,
   reported BOOLEAN NULL DEFAULT NULL,
   question_helpfulness INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (question_id)
 );
 
 COPY questions
@@ -20,7 +20,7 @@ CSV;
 DROP TABLE IF EXISTS answers;
 
 CREATE TABLE answers (
-  id SERIAL,
+  answer_id SERIAL,
   id_questions INTEGER NULL DEFAULT NULL,
   body TEXT NULL DEFAULT NULL,
   date TEXT NULL DEFAULT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE answers (
   answerer_email VARCHAR NULL DEFAULT NULL,
   reported BOOLEAN NULL DEFAULt NULL,
   helpfulness INTEGER NULL DEFAULT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (answer_id)
 );
 
 COPY answers
