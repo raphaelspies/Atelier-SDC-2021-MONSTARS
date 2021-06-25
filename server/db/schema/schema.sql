@@ -99,8 +99,9 @@ CREATE TABLE questions (
   question_body TEXT NULL DEFAULT NULL,
   question_date DATE NULL DEFAULT NULL,
   asker_name VARCHAR NULL DEFAULT NULL,
-  question_helpfulness INTEGER NULL DEFAULT NULL,
+  asker_email VARCHAR NULL DEFAULT NULL,
   reported BOOLEAN NULL DEFAULT NULL,
+  question_helpfulness INTEGER NULL DEFAULT NULL,
   id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
@@ -144,7 +145,7 @@ CREATE TABLE answers (
 -- ALTER TABLE category ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Review_photos ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Questions ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE Answers ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE answers DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
