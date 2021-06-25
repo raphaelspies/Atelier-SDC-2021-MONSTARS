@@ -1,4 +1,4 @@
-const getAllQuestionsAndReviewsSchema = {
+const getAllQuestionsAndAnswersSchema = {
   type: 'object',
   require: ['product_id', 'results'],
   properties: {
@@ -25,6 +25,6 @@ const paramsSchema = {
 };
 
 module.exports = {
-  getAllQuestionsAndReviewsSchema,
+  getAllQuestionsAndAnswersSchema,
   paramsSchema,
 }
