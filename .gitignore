@@ -1,7 +1,8 @@
 node_modules
+knexfile.js
 dist
-<<<<<<< HEAD
+schema2.sql
+CSV
+databases
 /data
-=======
-data
->>>>>>> 1acefdc9855ba852e759ccc357451896e94ea8ac
+
