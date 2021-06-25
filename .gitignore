@@ -4,4 +4,5 @@ dist
 schema2.sql
 CSV
 databases
+/data
 

@@ -15,14 +15,15 @@ CREATE TABLE products (
   id SERIAL,
   name VARCHAR NULL DEFAULT NULL,
   slogan VARCHAR NULL DEFAULT NULL,
-  description INTEGER NULL DEFAULT NULL,
-  category INTEGER NULL DEFAULT NULL,
+  description VARCHAR NULL DEFAULT NULL,
+  category VARCHAR NULL DEFAULT NULL,
   default_price INTEGER NULL DEFAULT NULL,
-  created_at DATE NULL DEFAULT NULL,
-  updated_at DATE NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
+COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+DELIMITER ','
+CSV HEADER;
 -- ---
 -- Table 'Reviews'
 --
@@ -99,8 +100,9 @@ CREATE TABLE questions (
   question_body TEXT NULL DEFAULT NULL,
   question_date DATE NULL DEFAULT NULL,
   asker_name VARCHAR NULL DEFAULT NULL,
-  question_helpfulness INTEGER NULL DEFAULT NULL,
+  asker_email VARCHAR NULL DEFAULT NULL,
   reported BOOLEAN NULL DEFAULT NULL,
+  question_helpfulness INTEGER NULL DEFAULT NULL,
   id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
@@ -144,7 +146,7 @@ CREATE TABLE answers (
 -- ALTER TABLE category ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Review_photos ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Questions ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE Answers ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE answers DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
