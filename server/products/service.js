@@ -5,7 +5,6 @@ module.exports = class Products {
 
   async getOneProduct(id) {
     const product = await this.db.select().from('products').where({id: `${id}`});
-    console.log(product);
     return product;
     // return "hello from getOneProduct!";
   }
@@ -16,7 +15,6 @@ module.exports = class Products {
   }
 
   async addProduct(productInfo) {
-    console.log(productInfo)
     // const { id, name, slogan, description, category, default_price } = productInfo
   // const productAdded = await this.db.insert()
   return "hello from addProduct!";
