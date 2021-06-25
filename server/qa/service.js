@@ -13,9 +13,10 @@ module.exports = class Questions {
       .offset(count * page - count);
 
     const findAnswersForQuestions = allQuestions.map(async (question) => {
-      const relatedAnswers = await knex.select('answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness')
+      const relatedAnswers = await knex.select('answers.answer_id as id', 'answers.body', 'answers.date', 'answers.answerer_name', 'answers.helpfulness', 'answers_photos.url as photos')
         .from('answers')
-        .where({ id_questions: question.question_id });
+        .where({ id_questions: question.question_id })
+        .leftJoin('answers_photos', 'answers_photos.answer_id', 'answers.answer_id');
 
       // formatting here to adhere to atelier API rules
       const formattedAnswers = relatedAnswers.reduce((acc, answer) => (

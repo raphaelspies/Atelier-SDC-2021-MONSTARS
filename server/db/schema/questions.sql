@@ -35,3 +35,19 @@ COPY answers
 FROM '/Users/erikoh/Desktop/hackreactor/SDC/Atelier-SDC-2021-MONSTARS/data/answers.csv'
 DELIMITER ','
 CSV HEADER;
+
+DROP TABLE IF EXISTS answers_photos;
+
+CREATE TABLE answers_photos (
+  id SERIAL,
+  answer_id INTEGER NULL DEFAULT NULL,
+  url TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+COPY answers_photos
+FROM '/Users/erikoh/Desktop/hackreactor/SDC/Atelier-SDC-2021-MONSTARS/data/answers_photos.csv'
+DELIMITER ','
+CSV HEADER;
+
+
