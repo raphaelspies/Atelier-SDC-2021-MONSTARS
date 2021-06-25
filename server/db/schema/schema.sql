@@ -15,15 +15,15 @@ CREATE TABLE products (
   id SERIAL,
   name VARCHAR NULL DEFAULT NULL,
   slogan VARCHAR NULL DEFAULT NULL,
-  description INTEGER NULL DEFAULT NULL,
-  category INTEGER NULL DEFAULT NULL,
+  description VARCHAR NULL DEFAULT NULL,
+  category VARCHAR NULL DEFAULT NULL,
   default_price INTEGER NULL DEFAULT NULL,
-  created_at DATE NULL DEFAULT NULL,
-  updated_at DATE NULL DEFAULT NULL,
-  PRIMARY KEY (id),
-  FULLTEXT KEY ()
+  PRIMARY KEY (id)
 );
 
+COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+DELIMITER ','
+CSV HEADER;
 -- ---
 -- Table 'Reviews'
 --
@@ -41,7 +41,7 @@ CREATE TABLE reviews (
   date DATE NULL DEFAULT NULL,
   reviewer_name VARCHAR NULL DEFAULT NULL,
   helpfulness INTEGER NULL DEFAULT NULL,
-  id_Products INTEGER NULL DEFAULT NULL,
+  id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE features (
   id SERIAL,
   feature VARCHAR NULL DEFAULT NULL,
   value INTEGER NULL DEFAULT NULL,
-  id_Products INTEGER NULL DEFAULT NULL,
+  id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -70,7 +70,7 @@ DROP TABLE IF EXISTS category;
 CREATE TABLE category (
   id SERIAL,
   name VARCHAR NULL DEFAULT NULL,
-  id_Products INTEGER NULL DEFAULT NULL,
+  id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -100,9 +100,10 @@ CREATE TABLE questions (
   question_body TEXT NULL DEFAULT NULL,
   question_date DATE NULL DEFAULT NULL,
   asker_name VARCHAR NULL DEFAULT NULL,
-  question_helpfulness INTEGER NULL DEFAULT NULL,
+  asker_email VARCHAR NULL DEFAULT NULL,
   reported BOOLEAN NULL DEFAULT NULL,
-  id_Products INTEGER NULL DEFAULT NULL,
+  question_helpfulness INTEGER NULL DEFAULT NULL,
+  id_products INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -116,11 +117,11 @@ DROP TABLE IF EXISTS answers;
 CREATE TABLE answers (
   id SERIAL,
   body TEXT NULL DEFAULT NULL,
-  date DATE NULL DEFAULT NULL,
+  date TEXT NULL DEFAULT NULL,
   answerer_name VARCHAR NULL DEFAULT NULL,
   helpfulness INTEGER NULL DEFAULT NULL,
   photos TEXT NULL DEFAULT NULL,
-  id_Questions INTEGER NULL DEFAULT NULL,
+  id_questions INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -128,8 +129,8 @@ CREATE TABLE answers (
 -- Foreign Keys
 -- ---
 
--- ALTER TABLE Reviews ADD FOREIGN KEY (id_Products) REFERENCES Products (id);
--- ALTER TABLE features ADD FOREIGN KEY (id_Products) REFERENCES Products (id);
+-- ALTER TABLE Reviews ADD FOREIGN KEY (id_products) REFERENCES Products (id);
+-- ALTER TABLE features ADD FOREIGN KEY (id_products) REFERENCES Products (id);
 -- ALTER TABLE category ADD FOREIGN KEY (id_Products) REFERENCES Products (id);
 -- ALTER TABLE Review_photos ADD FOREIGN KEY (id_Reviews) REFERENCES Reviews (id);
 -- ALTER TABLE Questions ADD FOREIGN KEY (id_Products) REFERENCES Products (id);
@@ -145,7 +146,7 @@ CREATE TABLE answers (
 -- ALTER TABLE category ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Review_photos ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE Questions ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE Answers ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE answers DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
