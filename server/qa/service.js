@@ -4,16 +4,32 @@ module.exports = class Questions {
   }
 
   async getAllQuestions(product_id, page, count) {
-    const allQuestions = await this.db
-      .select('question_id', 'question_body', 'question_date', 'asker_name', 'asker_email', 'question_helpfulness', 'reported')
+    const knex = this.db;
+    const allQuestions = await knex
+      .select('questions.question_id', 'questions.question_body', 'questions.question_date', 'questions.asker_name', 'questions.asker_email', 'questions.question_helpfulness', 'questions.reported')
       .from('questions')
       .where({ id_products: product_id })
       .limit(count)
       .offset(count * page - count);
-    const apiReturn = {
-      product_id,
-      results: allQuestions,
-    };
-    return apiReturn;
+
+    const findAnswersForQuestions = allQuestions.map(async (question) => {
+      const relatedAnswers = await knex.select('answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness')
+        .from('answers')
+        .where({ id_questions: question.question_id });
+
+      // formatting here to adhere to atelier API rules
+      const formattedAnswers = relatedAnswers.reduce((acc, answer) => (
+        { ...acc, [answer.id]: answer }
+      ), {});
+
+      return { ...question, answers: formattedAnswers };
+    });
+    return Promise.all(findAnswersForQuestions);
+  }
+
+  async getAllAnswers(question_id) {
+    const allAnswers = await this.db('answers')
+      .select('answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness')
+      .where({ id_questions: question_id });
   }
 };

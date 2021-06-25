@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 async function getAllQuestionsHandler(req: any, reply: FastifyReply) {
   try {
-    const { product_id, page, count } = req.query;
+    const { product_id, page = 1, count = 5 } = req.query;
     const allQuestions: Array<object> = await this.qna.getAllQuestions(product_id, page, count);
     reply.code(200).send(allQuestions);
   } catch (err) {
@@ -22,7 +22,6 @@ async function getAllAnswersHandler(req: any, reply: FastifyReply) {
     throw err;
   }
 }
-
 
 module.exports = {
   getAllQuestionsHandler,
