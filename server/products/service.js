@@ -14,8 +14,12 @@ module.exports = class Products {
     const products = await this.db.select().from('products').whereBetween('id', [1, 50]);
     return products;
   }
-};
 
-//   async addProduct(productInfo) {
-//   const productAdded = await this.db.insert()
-// },
+  async addProduct(productInfo) {
+    console.log(productInfo)
+    // const { id, name, slogan, description, category, default_price } = req.body
+  // const productAdded = await this.db.insert()
+  return "hello from addProduct!";
+  }
+
+};

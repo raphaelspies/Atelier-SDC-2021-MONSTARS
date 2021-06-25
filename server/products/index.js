@@ -1,6 +1,6 @@
 const {
   allProductsSchema,
-  // addProductSchema,
+  addProductSchema,
 } = require('./schema');
 
 // handlers
@@ -21,7 +21,17 @@ async function getAllProductsHandler(req, reply) {
     reply.code(200).send(products);
   } catch (err) {
     reply.code(400).send(err);
-    console.log(`error trying to get product all products: `, err);
+    console.log(`error trying to get all products: `, err);
+  }
+}
+
+async function addProductsHandler(req, reply) {
+  try {
+    const productAdded = await this.products.addProduct(req.body);
+    reply.code(200).send(productAdded);
+  } catch (err) {
+    reply.code(400).send(err);
+    console.log(`error trying to add product: `, err);
   }
 }
 
@@ -29,6 +39,7 @@ async function getAllProductsHandler(req, reply) {
 module.exports = function (fastify, opts, done) {
   fastify.get('/:id', getOneProductHandler);
   fastify.get('/', getAllProductsHandler);
+  fastify.post('/', { schema: addProductSchema }, addProductsHandler);
   done();
 };
 
