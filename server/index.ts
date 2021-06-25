@@ -8,7 +8,7 @@ const fastify = require('fastify')({
   },
 });
 const fp: FastifyRegister = require('fastify-plugin');
-const db: Knex = require('./db');
+const db: Knex = require('./db/');
 // model classes
 const QuestionsAndAnswers = require('./qa/service');
 const Products = require('./products/service');
