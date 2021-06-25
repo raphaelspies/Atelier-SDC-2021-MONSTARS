@@ -17,9 +17,13 @@ module.exports = class Products {
 
   async addProduct(productInfo) {
     console.log(productInfo)
-    // const { id, name, slogan, description, category, default_price } = req.body
+    // const { id, name, slogan, description, category, default_price } = productInfo
   // const productAdded = await this.db.insert()
   return "hello from addProduct!";
   }
 
+  async getStyles(id) {
+    const styles = await this.db.select().from('styles').where({productid: id});
+    return styles;
+  }
 };
