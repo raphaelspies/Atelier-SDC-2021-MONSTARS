@@ -36,3 +36,33 @@ CREATE TABLE styles (
 COPY styles FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/styles.csv'
 DELIMITER ','
 CSV HEADER;
+
+--  Photos
+DROP TABLE IF EXISTS photos;
+
+CREATE TABLE photos (
+  id SERIAL,
+  styleid INTEGER NULL DEFAULT NULL,
+  url VARCHAR NULL DEFAULT NULL,
+  thumbnail_url VARCHAR NULL DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+COPY photos FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/photos.csv'
+DELIMITER ','
+CSV HEADER;
+
+--photos
+DROP TABLE IF EXISTS features;
+
+CREATE TABLE features (
+  id SERIAL,
+  product_id INTEGER NULL DEFAULT NULL,
+  feature VARCHAR NULL DEFAULT NULL,
+  value VARCHAR  NULL DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+COPY features FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/features.csv'
+DELIMITER ','
+CSV HEADER;
