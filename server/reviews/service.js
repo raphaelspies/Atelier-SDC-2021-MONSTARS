@@ -69,4 +69,31 @@ module.exports = class Reviews {
     });
     return data;
   }
+
+  async putHelpfulReview(id) {
+    const update = await this.db.raw(`UPDATE reviews SET helpfulness = helpfulness + 1 WHERE id = ${id} `);
+    return update;
+  }
+
+  async putReportReview(id) {
+    const update = await this.db.raw(`UPDATE reviews SET reported = true WHERE id = ${id};`);
+    return update;
+  }
+
+  async postReview(params) {
+    const {
+      product_id,
+      rating,
+      summary,
+      body,
+      recommend,
+      name,
+      email,
+      photos,
+      characteristics
+    } = params;
+    console.log('body test', body);
+    // const postData = await this.db.raw();
+    return
+  }
 };

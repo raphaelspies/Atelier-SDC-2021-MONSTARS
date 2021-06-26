@@ -1,7 +1,6 @@
 node_modules
 knexfile.js
 dist
-schema2.sql
 CSV
 databases
 /data
