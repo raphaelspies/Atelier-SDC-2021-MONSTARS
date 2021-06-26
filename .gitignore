@@ -1,10 +1,7 @@
 node_modules
 knexfile.js
 dist
-<<<<<<< HEAD
-=======
 data
 schema2.sql
->>>>>>> ebb1d03c1693b0d273fc6ba7bf470df8a8896265
 CSV
 databases
