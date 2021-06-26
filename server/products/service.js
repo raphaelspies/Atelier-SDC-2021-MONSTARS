@@ -18,14 +18,23 @@ module.exports = class Products {
   }
 
   // async addProduct(productInfo) {
-  //   const { id, name, slogan, description, category, default_price } = productInfo;
+  //   const { id, name, slogan, description, category, default_price } = productInfo.body;
   // const productAdded = await this.db.insert(productInfo);
   // return productAdded;
   // }
 
   async getStyles(id) {
     // const styles = await this.db.select().from('styles').where({productid: id});
-    const styles = await this.db.select().from('products').innerJoin('photos', { 'products.id': 'photos.styleid' }).where({ 'products.id': `${id}` });
+    const results = await this.db.select().from('products').where({ 'products.id': `${id}` });
+    const photos = await this.db.select('url', 'thumbnail_url').from('photos', { 'products.id': 'photos.styleid' }).where({ 'photos.styleid': `${id}` });
+    results.photos = photos;
+    const skus = await this.db.select('quantity', 'size').from('skus').where({ styleid: `${id}` });
+    const styles = {
+      product_id: `${id}`,
+      results,
+      skus,
+    };
+
     return styles;
   }
 };
