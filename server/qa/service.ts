@@ -1,5 +1,12 @@
-import { Knex } from "knex";
+import { Knex } from 'knex';
 
+function convertCSVDate(collection: Array<any>, dateName: string) {
+  collection.forEach((entry) => {
+    const formattedDate = new Date(Number(entry[dateName]));
+    // eslint-disable-next-line no-param-reassign
+    entry[dateName] = formattedDate.toString();
+  });
+}
 module.exports = class Questions {
   db: Knex
 
@@ -9,12 +16,6 @@ module.exports = class Questions {
 
   async getAllQuestions(product_id: number, page: number, count: number) {
     const knex = this.db;
-    function convertCSVDate(collection: Array<any>, dateName: string) {
-      collection.forEach((entry) => {
-        const formattedDate = new Date(Number(entry[dateName]));
-        entry[dateName] = formattedDate.toString();
-      });
-    }
 
     const allQuestions = await knex('questions')
       .select('question_id', 'question_body', 'question_date', 'asker_name', 'asker_email', 'question_helpfulness', 'reported')
@@ -97,5 +98,33 @@ module.exports = class Questions {
     await knex('answers_photos')
       .where({ answer_id: insertedAnswerId[0] })
       .update({ url: photos });
+  }
+
+  async updateQuestionAsHelpful(question_id) {
+    const knex = this.db;
+    await knex('questions')
+      .where({ question_id })
+      .increment('question_helpfulness', 1);
+  }
+
+  async reportQuestion(question_id) {
+    const knex = this.db;
+    await knex('questions')
+      .where({ question_id })
+      .update({ reported: true });
+  }
+
+  async updateAnswerAsHelpful(answer_id) {
+    const knex = this.db;
+    await knex('answers')
+      .where({ answer_id })
+      .increment('helpfulness');
+  }
+
+  async reportAnswer(answer_id) {
+    const knex = this.db;
+    await knex('answers')
+      .where({ answer_id })
+      .update({ reported: true });
   }
 };

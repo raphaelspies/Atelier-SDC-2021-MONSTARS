@@ -50,13 +50,57 @@ async function postAnswerHandler(req: any, reply: FastifyReply) {
   }
 }
 
+async function updateQuestionAsHelpfulHandler(req: any, reply: FastifyReply) {
+  try {
+    const { question_id } = req.params;
+    await this.qna.updateQuestionAsHelpful(question_id);
+    reply.code(201).send('sucessfully updated question as helpful');
+  } catch (err) {
+    console.log('error trying to mark question as helpful', err);
+    throw err;
+  }
+}
+
+async function reportQuestionHandler(req: any, reply: FastifyReply) {
+  try {
+    const { question_id } = req.params;
+    await this.qna.reportQuestion(question_id);
+    reply.code(201).send('successfully reported question');
+  } catch (err) {
+    console.log('error trying to report question');
+    throw err;
+  }
+}
+
+async function updateAnswerAsHelpfulHandler(req: any, reply: FastifyReply) {
+  try {
+    const { answer_id } = req.params;
+    await this.qna.updateAnswerAsHelpful(answer_id);
+    reply.code(201).send('successfully marked answer as helpful');
+  } catch (err) {
+    console.log('error trying to mark answer as helpful');
+    throw err;
+  }
+}
+
+async function reportAnswerHandler(req: any, reply: FastifyReply) {
+  try {
+    const { answer_id } = req.params;
+    await this.qna.reportAnswer(answer_id);
+    reply.code(201).send('successfully reported answer');
+  } catch (err) {
+    console.log('error trying to report answer');
+    throw err;
+  }
+}
+
 module.exports = {
   getAllQuestionsHandler,
   getAllAnswersHandler,
   postQuestionHandler,
   postAnswerHandler,
-  // updateQuestionAsHelpfulHandler,
-  // reportQuestionHandler,
-  // updateAnswerAsHelpfulHandler,
-  // reportAnswerHandler,
+  updateQuestionAsHelpfulHandler,
+  reportQuestionHandler,
+  updateAnswerAsHelpfulHandler,
+  reportAnswerHandler,
 }

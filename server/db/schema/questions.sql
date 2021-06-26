@@ -7,8 +7,8 @@ CREATE TABLE questions (
   question_date BIGINT NULL DEFAULT NULL,
   asker_name VARCHAR NULL DEFAULT NULL,
   asker_email VARCHAR NULL DEFAULT NULL,
-  reported BOOLEAN NULL DEFAULT NULL,
-  question_helpfulness INTEGER NULL DEFAULT NULL,
+  reported BOOLEAN NULL DEFAULT false,
+  question_helpfulness INTEGER NULL DEFAULT 0,
   PRIMARY KEY (question_id)
 );
 
@@ -26,8 +26,8 @@ CREATE TABLE answers (
   date TEXT NULL DEFAULT NULL,
   answerer_name VARCHAR NULL DEFAULT NULL,
   answerer_email VARCHAR NULL DEFAULT NULL,
-  reported BOOLEAN NULL DEFAULt NULL,
-  helpfulness INTEGER NULL DEFAULT NULL,
+  reported BOOLEAN NULL DEFAULt false,
+  helpfulness INTEGER NULL DEFAULT 0,
   PRIMARY KEY (answer_id)
 );
 
