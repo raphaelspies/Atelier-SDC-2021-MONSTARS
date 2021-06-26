@@ -15,7 +15,7 @@ async function getAllAnswersHandler(req: any, reply: FastifyReply) {
   try {
     const { id } = req.params;
     const { page = 1, count = 5 } = req.query;
-    const allAnswers: object[] = await this.qna.getOneQuestion(id, page, count);
+    const allAnswers: Array<object> = await this.qna.getAllAnswers(id, page, count);
     reply.code(200).send(allAnswers);
   } catch (err) {
     console.log('error trying to get one question: ', err);
