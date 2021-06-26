@@ -1,7 +1,6 @@
 // TODO add schemas
 // handlers
 
-// get reviews by product id params(page,count,sort,id) defaults 1,5 no reported reviews
 async function getReviewsHandler(req, reply) {
   try {
     const { product_id, count = 5, page = 1 } = req.params;
@@ -14,6 +13,16 @@ async function getReviewsHandler(req, reply) {
 }
 
 // get reviews meta by product id
+async function getReviewsMetaHandler(req, reply) {
+  try {
+    const { product_id } = req.params;
+    const reviewsData = await this.reviews.getReviewsMeta(product_id);
+    reply.code(200).send(reviewsData);
+  } catch (err) {
+    reply.code(400).send(err);
+    console.log('Error trying to get reviews meta:', err);
+  }
+}
 
 // post
 
@@ -22,5 +31,6 @@ async function getReviewsHandler(req, reply) {
 // routing
 module.exports = function reviewRoutes(fastify, options, done) {
   fastify.get('/:product_id', getReviewsHandler);
+  fastify.get('/meta/:product_id', getReviewsMetaHandler);
   done();
 };
