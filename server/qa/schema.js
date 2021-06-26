@@ -70,7 +70,7 @@ const postAnswerOpts = {
 
 const updateQuestionAsHelpfulOpts = {
   schema: {
-    query: {
+    params: {
       type: 'object',
       required: ['question_id'],
       properties: {
