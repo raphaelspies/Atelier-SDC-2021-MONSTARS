@@ -13,7 +13,6 @@ module.exports = class Products {
     const styles = await this.db.select('feature', 'value').from('features').where({ product_id: `${id}` });
     [product] = product;
     product.features = styles;
-    // const product = await this.db.select().from('products').where({'products.id': `${id}`});
     return product;
   }
 
@@ -24,7 +23,6 @@ module.exports = class Products {
   // }
 
   async getStyles(id) {
-    // const styles = await this.db.select().from('styles').where({productid: id});
     const results = await this.db.select().from('products').where({ 'products.id': `${id}` });
     const photos = await this.db.select('url', 'thumbnail_url').from('photos', { 'products.id': 'photos.styleid' }).where({ 'photos.styleid': `${id}` });
     results.photos = photos;
