@@ -30,7 +30,7 @@ module.exports = class Questions {
       return { ...question, answers: formatted };
     });
 
-    async function addResultsWrapper() {
+    async function questionsAndAnswersResultsWrapper() {
       const resolvedQuestionsAndAnswers = await Promise.all(findAnswersForQuestions);
       const resultsWrapper = {
         product_id,
@@ -39,15 +39,32 @@ module.exports = class Questions {
       return resultsWrapper;
     }
 
-    const wrappedQuestionsAndAnswers = addResultsWrapper();
+    const wrappedQuestionsAndAnswers = questionsAndAnswersResultsWrapper();
     return wrappedQuestionsAndAnswers;
   }
 
-  async getAllAnswers(question_id) {
+  async getAllAnswers(question_id: number, page: number, count: number) {
     const knex = this.db;
-    const allAnswers = await knex('answers')
-      .select('answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness')
-      .where({ id_questions: question_id });
-    return allAnswers;
+    const allAnswers = await knex
+      .select()
+      .from('answers')
+      .where({ id_questions: question_id })
+      .limit(count)
+      .offset(count * page - count);
+
+    function answersResultsWrapper() {
+      const wrappedResult = {
+        question: question_id,
+        page,
+        count,
+        results: allAnswers,
+      };
+      return wrappedResult;
+    }
+
+    const wrappedAnswers = answersResultsWrapper();
+    return wrappedAnswers;
   }
 };
+
+// 'answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness'
