@@ -25,15 +25,15 @@ module.exports = class Questions {
     convertCSVDate(allQuestions, 'question_date');
 
     const findAnswersForQuestions = allQuestions.map(async (question) => {
-      const relatedAnswers = await knex
-        .select('answers.answer_id as id', 'answers.body', 'answers.date', 'answers.answerer_name', 'answers.helpfulness', 'answers_photos.url as photos')
-        .from('answers')
+      const relatedAnswers = await knex('answers')
+        .leftJoin('answers_photos', 'answers_photos.answer_id', 'answers.answer_id')
         .where({ id_questions: question.question_id })
-        .leftJoin('answers_photos', 'answers_photos.answer_id', 'answers.answer_id');
+        .select(['answers.answer_id as id', 'answers.body', 'answers.date', 'answers.answerer_name', 'answers.helpfulness', knex.raw('ARRAY_AGG(answers_photos.url) as photos')])
+        .groupBy('answers.answer_id');
       convertCSVDate(relatedAnswers, 'date');
 
       // formatting here to adhere to atelier's nested API data structure
-      const formatted = relatedAnswers.reduce((acc, answer) => (
+      const formatted = relatedAnswers.reduce((acc, answer: any) => (
         { ...acc, [answer.id]: answer }
       ), {});
       return { ...question, answers: formatted };
@@ -54,10 +54,13 @@ module.exports = class Questions {
 
   async getAllAnswers(question_id: number, page: number, count: number) {
     const knex = this.db;
-    const allAnswers = await knex
-      .select()
-      .from('answers')
+    const allAnswers = await knex('answers')
+      .leftJoin('answers_photos', 'answers_photos.answer_id', 'answers.answer_id')
       .where({ id_questions: question_id })
+      .select([
+        'answers.answer_id', 'answers.body', 'answers.date', 'answers.answerer_name', 'answers.answerer_email', 'answers.reported', 'answers.helpfulness', knex.raw('ARRAY_AGG(answers_photos.url) as photos'),
+      ])
+      .groupBy('answers.answer_id')
       .limit(count)
       .offset(count * page - count);
 
