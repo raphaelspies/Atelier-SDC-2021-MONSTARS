@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS questions;
 
 CREATE TABLE questions (
-  question_id INTEGER,
+  question_id SERIAL,
   id_products INTEGER NULL DEFAULT NULL,
   question_body TEXT NULL DEFAULT NULL,
   question_date BIGINT NULL DEFAULT NULL,
@@ -50,4 +50,18 @@ FROM '/Users/erikoh/Desktop/hackreactor/SDC/Atelier-SDC-2021-MONSTARS/data/answe
 DELIMITER ','
 CSV HEADER;
 
+SELECT pg_catalog.setval(pg_get_serial_sequence('questions', 'question_id'), (SELECT MAX(question_id) FROM questions)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('answers', 'answer_id'), (SELECT MAX(answer_id) FROM answers)+1);
+SELECT pg_catalog.setval(pg_get_serial_sequence('answers_photos', 'id'), (SELECT MAX(id) FROM answers_photos)+1);
 
+CREATE INDEX questions_index ON questions (
+  id_products
+);
+
+CREATE INDEX answers_index ON answers (
+  id_questions
+);
+
+CREATE INDEX answers_photos_index ON answers_photos (
+  answer_id
+);

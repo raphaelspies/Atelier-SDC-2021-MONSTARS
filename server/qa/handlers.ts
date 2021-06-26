@@ -23,11 +23,38 @@ async function getAllAnswersHandler(req: any, reply: FastifyReply) {
   }
 }
 
+async function postQuestionHandler(req: any, reply: FastifyReply) {
+  try {
+    const {
+      body, name, email, product_id,
+    } = req.body;
+    await this.qna.postQuestion(body, name, email, product_id);
+    reply.code(201).send('CREATED new question');
+  } catch (err) {
+    console.log('error trying to post question: ', err);
+    throw err;
+  }
+}
+
+async function postAnswerHandler(req: any, reply: FastifyReply) {
+  try {
+    const { question_id } = req.params;
+    const {
+      body, name, email, photos,
+    } = req.body;
+    await this.qna.postAnswer(body, name, email, photos, question_id);
+    reply.code(201).send('CREATED new answer');
+  } catch (err) {
+    console.log('error trying to post answer: ', err);
+    throw err;
+  }
+}
+
 module.exports = {
   getAllQuestionsHandler,
   getAllAnswersHandler,
-  // postQuestionHandler,
-  // postAnswerHandler,
+  postQuestionHandler,
+  postAnswerHandler,
   // updateQuestionAsHelpfulHandler,
   // reportQuestionHandler,
   // updateAnswerAsHelpfulHandler,

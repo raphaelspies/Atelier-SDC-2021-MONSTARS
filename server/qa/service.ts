@@ -9,12 +9,19 @@ module.exports = class Questions {
 
   async getAllQuestions(product_id: number, page: number, count: number) {
     const knex = this.db;
-    const allQuestions = await knex
-      .select('questions.question_id', 'questions.question_body', 'questions.question_date', 'questions.asker_name', 'questions.asker_email', 'questions.question_helpfulness', 'questions.reported')
-      .from('questions')
+    function convertCSVDate(collection: Array<any>, dateName: string) {
+      collection.forEach((entry) => {
+        const formattedDate = new Date(Number(entry[dateName]));
+        entry[dateName] = formattedDate.toString();
+      });
+    }
+
+    const allQuestions = await knex('questions')
+      .select('question_id', 'question_body', 'question_date', 'asker_name', 'asker_email', 'question_helpfulness', 'reported')
       .where({ id_products: product_id })
       .limit(count)
       .offset(count * page - count);
+    convertCSVDate(allQuestions, 'question_date');
 
     const findAnswersForQuestions = allQuestions.map(async (question) => {
       const relatedAnswers = await knex
@@ -22,6 +29,7 @@ module.exports = class Questions {
         .from('answers')
         .where({ id_questions: question.question_id })
         .leftJoin('answers_photos', 'answers_photos.answer_id', 'answers.answer_id');
+      convertCSVDate(relatedAnswers, 'date');
 
       // formatting here to adhere to atelier's nested API data structure
       const formatted = relatedAnswers.reduce((acc, answer) => (
@@ -65,6 +73,29 @@ module.exports = class Questions {
     const wrappedAnswers = answersResultsWrapper();
     return wrappedAnswers;
   }
-};
 
-// 'answer_id as id', 'body', 'date', 'answerer_name', 'helpfulness'
+  async postQuestion(body: string, name: string, email: string, product_id: number) {
+    const knex = this.db;
+    await knex('questions')
+      .insert({
+        question_body: body,
+        asker_name: name,
+        asker_email: email,
+        id_products: product_id,
+      });
+  }
+
+  async postAnswer(body: string, name: string, email: string, photos: any, question_id: number) {
+    const knex = this.db;
+    const insertedAnswerId = await knex('answers')
+      .insert({
+        id_questions: question_id,
+        body,
+        answerer_name: name,
+        answerer_email: email,
+      }, 'answer_id');
+    await knex('answers_photos')
+      .where({ answer_id: insertedAnswerId[0] })
+      .update({ url: photos });
+  }
+};
