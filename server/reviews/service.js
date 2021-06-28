@@ -2,26 +2,13 @@ module.exports = class Reviews {
   constructor(db) {
     this.db = db;
   }
-  // eslint-disable-next-line max-len
-  //  const reviews = await this.db.raw(`select reviews.id AS review_id, rating, summary,recommend, response, body, date, reviewer_name, helpfulness,JSONB_AGG(to_jsonb(review_photos) - 'review_id')AS photos from reviews  Left JOIN review_photos ON review_photos.review_id = reviews.id WHERE reviews.product_id =2 GROUP BY reviews.id LIMIT ${count} OFFSET ${offSet};`);
-  // data.product = `${id}`;
-  // data.page = `${page}`;
-  // data.count = reviews.rowCount;
-  // reviews.rows.forEach((entry) => {
-  //   const dateCode = entry.date;
-  //   const myDate = new Date(Number.parseInt(dateCode));
-  //   entry.date = (myDate.toISOString());
-  // });
-  // data.results = reviews.rows;
-  // return data;
 
   async getReviewsById(id, count, page) {
     const offSet = count * page - count;
     const data = {};
-    const reviews = await this.db.raw(`select reviews.id AS review_id, rating, summary,recommend, response, body, date, reviewer_name, helpfulness from reviews where product_id = ${id} AND reviews.reported = false LIMIT ${count} OFFSET ${offSet};`);
+    const reviews = await this.db.raw(`select reviews.id AS review_id, rating, summary,recommend, response, body, to_timestamp(date/1000) AS date, reviewer_name, helpfulness from reviews where product_id = ${id} AND reviews.reported = false LIMIT ${count} OFFSET ${offSet};`);
 
     const reviewsWithPhotos = reviews.rows.map(async (review) => {
-      review.date = new Date(Number.parseInt(review.date, 10));
       const photos = await this.db.raw(`select id, url from review_photos where review_photos.review_id = ${review.review_id};`);
       return { ...review, photos: photos.rows };
     });
@@ -81,19 +68,69 @@ module.exports = class Reviews {
   }
 
   async postReview(params) {
-    const {
-      product_id,
-      rating,
-      summary,
-      body,
-      recommend,
-      name,
-      email,
-      photos,
-      characteristics
-    } = params;
-    console.log('body test', body);
-    // const postData = await this.db.raw();
-    return
+    try {
+      const {
+        product_id,
+        rating,
+        summary,
+        body,
+        recommend,
+        name,
+        email,
+        photos,
+        characteristics,
+      } = params;
+
+      const date = Date.now();
+      const knex = this.db;
+
+      await knex.transaction(async (trx) => {
+        const insertedId = await knex('reviews')
+          .insert({
+            product_id,
+            rating,
+            date,
+            summary,
+            body,
+            recommend,
+            reviewer_name: name,
+            reviewer_email: email,
+          }, 'id')
+          .transacting(trx);
+
+        // For Photos
+        const photosArry = [];
+        if (photos.length !== 0) {
+          photos.forEach((entry) => {
+            const photoObj = {
+              review_id: insertedId[0],
+              url: entry,
+            };
+            photosArry.push(photoObj);
+          });
+          await knex('review_photos')
+            .insert(photosArry)
+            .transacting(trx);
+        }
+
+        // For characertistics
+        const characertisticsArray = [];
+        Object.entries(characteristics).forEach(async (entry) => {
+          const [key, value] = entry;
+          const characterObj = {
+            character_id: parseInt(key, 10),
+            review_id: insertedId[0],
+            value,
+          };
+          characertisticsArray.push(characterObj);
+        });
+        await trx('characteristic_reviews')
+          .insert(characertisticsArray)
+          .transacting(trx);
+      });
+    } catch (error) {
+      console.log('Error Posting Review', error);
+      throw error;
+    }
   }
 };

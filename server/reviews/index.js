@@ -31,9 +31,8 @@ async function getReviewsMetaHandler(req, reply) {
 // post
 async function postReviewHandler(req, reply) {
   try {
-    console.log('body', req.body);
-    const postReview = await this.reviews.postReview(req.body);
-    reply.code(201).send(postReview);
+    await this.reviews.postReview(req.body);
+    reply.code(201).send();
   } catch (err) {
     reply.code(400).send(err);
     console.log('Error trying to post review:', err);
