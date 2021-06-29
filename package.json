@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node_modules/.bin/tsc-watch --onSuccess \"node dist/index.js\"",
     "test": "tap --reporter=list --watch",
-    "database": "psql -U postgres -d atelier -f ./server/db/schema/products.sql -f ./server/db/schema/questions.sql",
+    "database": "psql -U postgres -d atelier -f ./server/db/schema/products.sql",
     "lint": "eslint --ignore-path .gitignore"
   },
   "repository": {
