@@ -29,6 +29,6 @@ fastify.listen(3000, '0.0.0.0')
     process.exit(1);
   });
 
-  fastify.get('/', async (req, reply) => {
-    return "welcome to the server!";
-  })
+  fastify.get('/loaderio-2ca767992e99d62f25df010f75d89d0c/', (req, reply) => {
+    reply.send('loaderio-2ca767992e99d62f25df010f75d89d0c');
+  });
