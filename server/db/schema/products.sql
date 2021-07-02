@@ -17,7 +17,9 @@ CREATE TABLE products (
 );
 
 CREATE INDEX products_id_index on products(id);
-COPY products FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/product.csv'
+COPY products FROM '/home/raphaelspies/Atelier/Atelier-SDC-2021-MONSTARS/server/db/schema/product.csv'
+-- COPY products FROM '/home/ubuntu/Atelier-SDC-2021-MONSTARS/data/product.csv'
+
 DELIMITER ','
 CSV HEADER;
 
@@ -35,7 +37,8 @@ CREATE TABLE styles (
 );
 
 CREATE INDEX styles_index on styles(id);
-COPY styles FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/styles.csv'
+COPY styles FROM '/home/raphaelspies/Atelier/Atelier-SDC-2021-MONSTARS/server/db/schema/styles.csv'
+-- COPY styles FROM '/home/ubuntu/Atelier-SDC-2021-MONSTARS/data/styles.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -51,7 +54,8 @@ CREATE TABLE photos (
 );
 
 CREATE INDEX photos_styleid_index on photos(styleid);
-COPY photos FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/photos.csv'
+COPY photos FROM '/home/raphaelspies/Atelier/Atelier-SDC-2021-MONSTARS/server/db/schema/photos.csv'
+-- COPY photos FROM '/home/ubuntu/Atelier-SDC-2021-MONSTARS/data/photos.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -67,7 +71,8 @@ CREATE TABLE features (
 );
 
 CREATE INDEX features_productid_index on features(product_id);
-COPY features FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/features.csv'
+COPY features FROM '/home/raphaelspies/Atelier/Atelier-SDC-2021-MONSTARS/server/db/schema/features.csv'
+-- COPY features FROM '/home/ubuntu/Atelier-SDC-2021-MONSTARS/data/features.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -83,6 +88,7 @@ CREATE TABLE skus (
 );
 
 CREATE INDEX skus_styleid_index on skus(styleid);
-COPY skus FROM '/home/raphaelspies/Atelier-SDC-2021-MONSTARS/data/skus.csv'
+-- COPY skus FROM '/home/ubuntu/Atelier-SDC-2021-MONSTARS/data/skus.csv'
+COPY skus FROM '/home/raphaelspies/Atelier/Atelier-SDC-2021-MONSTARS/server/db/schema/skus.csv'
 DELIMITER ','
 CSV HEADER;

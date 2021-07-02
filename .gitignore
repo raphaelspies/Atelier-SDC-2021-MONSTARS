@@ -5,3 +5,5 @@ schema2.sql
 *.csv
 databases
 *.pem
+Dockerfile
+.dockerignore
